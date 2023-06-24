@@ -20,6 +20,7 @@ def define_neural_network():
     neural_network.add_weights(layer2_size, output_size)
     return neural_network
 
+
 def create_population():
     """
     Initializes the population of neural networks.
@@ -33,13 +34,13 @@ class GeneticAlgorithm:
     This class represents a Genetic Algorithm for optimizing a neural network.
     """
 
-    def __init__(self, train_path, test_path):
+    def __init__(self, file_path):
         """
         Initializes the genetic algorithm with a population and dataset.
         """
         self.population = create_population()
         # possible to pass path of text file to split_data.
-        self.x_train, self.y_train, self.x_test, self.y_test = split_data(train_path, test_path)
+        self.x_train, self.y_train, self.x_test, self.y_test = split_data(file_path)
         self.best_fitness = 0
         self.same_fitness_count = 0
         self.generation = 0
@@ -204,13 +205,12 @@ class GeneticAlgorithm:
 
             # save the highest fitness
             current_fitness = max(fitness_scores)
-
             self.list_of_accuracy.append(max(fitness_scores))
-
             # convergence
             if current_fitness > self.best_fitness:
                 self.best_fitness = current_fitness
                 self.same_fitness_count = 0
+                max_index = self.population[np.argmax(fitness_scores)]
             else:
                 self.same_fitness_count += 1
 
@@ -238,6 +238,9 @@ class GeneticAlgorithm:
             if self.same_fitness_count > lamarckian_condition:
                 self.population = [self.lamarckian_modification(network) for network in self.population]
 
+            min_index = np.argmin(fitness_scores)
+            self.population[min_index] = max_index
+
         fitness_scores = [self.calculate_fitness(network) for network in self.population]
         best_ind = self.population[np.argmax(fitness_scores)]
         return best_ind
@@ -257,7 +260,6 @@ class GeneticAlgorithm:
 
         # Create a deep copy of the original network
         new_network = copy.deepcopy(network)
-
 
         # Perform Lamarckian inheritance by modifying random weights in the network
         for i in range(limit_lamarckian):
@@ -394,7 +396,7 @@ if __name__ == '__main__':
     start_time = time.perf_counter()
 
     # Initialize the genetic algorithm
-    ga = GeneticAlgorithm('nn1_train.txt', 'nn1_test.txt')
+    ga = GeneticAlgorithm('nn0.txt')
 
     # Train the network
     best_network = ga.evolve()
@@ -406,7 +408,7 @@ if __name__ == '__main__':
     print(f"accuracy: {accuracy}")
 
     # Visualize the progress
-    create_png(ga.generations, ga.list_of_accuracy)
+    create_png(ga.generations, ga.list_of_accuracy, "fitness_scores_nn1")
 
     end_time = time.perf_counter()
     total_time = (end_time - start_time) / 60

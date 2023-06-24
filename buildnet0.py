@@ -28,18 +28,19 @@ def create_population():
     population = [define_neural_network() for _ in range(population_size)]
     return population
 
+
 class GeneticAlgorithm:
     """
     This class represents a Genetic Algorithm for optimizing a neural network.
     """
 
-    def __init__(self, train_path, test_path):
+    def __init__(self, file_path):
         """
         Initializes the genetic algorithm with a population and dataset.
         """
         self.population = create_population()
         # possible to pass path of text file to split_data.
-        self.x_train, self.y_train, self.x_test, self.y_test = split_data(train_path, test_path)
+        self.x_train, self.y_train, self.x_test, self.y_test = split_data(file_path)
         self.best_fitness = 0
         self.same_fitness_count = 0
         self.generation = 0
@@ -391,7 +392,7 @@ if __name__ == '__main__':
     start_time = time.perf_counter()
 
     # Initialize the genetic algorithm
-    ga = GeneticAlgorithm('nn0_train.txt', 'nn0_test.txt')
+    ga = GeneticAlgorithm('nn1.txt')
 
     # Train the network
     best_network = ga.evolve()
@@ -403,7 +404,7 @@ if __name__ == '__main__':
     print(f"accuracy: {accuracy}")
 
     # Visualize the progress
-    create_png(ga.generations, ga.list_of_accuracy)
+    create_png(ga.generations, ga.list_of_accuracy, "fitness_scores_nn0")
 
     end_time = time.perf_counter()
     total_time = (end_time - start_time) / 60
