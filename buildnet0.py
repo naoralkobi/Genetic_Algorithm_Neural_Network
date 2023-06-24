@@ -392,11 +392,11 @@ if __name__ == '__main__':
     start_time = time.perf_counter()
 
     # Initialize the genetic algorithm
-    ga = GeneticAlgorithm('nn1.txt')
+    ga = GeneticAlgorithm('nn0.txt')
 
     # Train the network
     best_network = ga.evolve()
-    write_wnet(best_network, 'wnet0.pkl')
+    write_object_to_file(best_network, 'wnet0.pkl')
 
     # Test the network
     predict_test = best_network.predict(ga.x_test)

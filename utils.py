@@ -135,7 +135,7 @@ def calculate_accuracy(train_labels, predictions):
     return np.mean(correct_predictions)
 
 
-def write_wnet(network, file_path):
+def write_object_to_file(network, file_path):
     """
     Write a network object to a file using pickle serialization.
 
