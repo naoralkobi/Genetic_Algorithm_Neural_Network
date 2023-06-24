@@ -1,0 +1,16 @@
+input_size = 16
+layer1_size = 32
+layer2_size = 16
+output_size = 1
+test_ratio = 0.2
+population_size = 100
+generations_num = 500
+untouched_ratio_nno = 0.3
+untouched_ratio_nn1 = 0.05
+stop_condition = 30
+selection_rate = 0.1
+top_individuals_size = selection_rate * population_size
+mutation_rate = 0.3
+lamarckian_condition = 3
+limit_lamarckian = 5
+epsilon = 0.01
