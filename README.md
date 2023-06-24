@@ -6,7 +6,7 @@ This repository contains a Python implementation of a Genetic Algorithm for opti
 1. Clone the repository:
 
 ```
-git clone https://github.com/your_username/genetic-neural-network.git
+gh repo clone naoralkobi/Genetic_Algorithm_Neural_Network
 ```
 
 2. Change to the project directory:
