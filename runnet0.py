@@ -1,27 +1,40 @@
-import pandas as pd
+"""
+Script to load a test dataset, use a pre-trained neural network for predictions, and save the results to a file.
+"""
 
-from buildnet0 import Individual
+import pandas as pd
+from buildnet0 import NeuralNetwork  # Assuming `buildnet0` contains the definition of the NeuralNetwork class
 import numpy as np
 import pickle
 
 
-def load_test_data(filename):
-    with open(filename, 'r') as test_file:
-        lines = test_file.readlines()
+def load(filename):
+    """
+    Load data from a file.
 
-    data = [[int(bit) for bit in line.strip()] for line in lines]
-    return np.array(data)
+    Args:
+        filename (str): The name of the file to load.
 
+    Returns:
+        numpy.ndarray: The loaded data as a NumPy array.
 
-def main():
-    x_test = load_test_data("testnet0.txt")
-    with open('wnet0.pkl', 'rb') as file:
-        best_network = pickle.load(file)
-    predictions_labels = best_network.predict(x_test)
-    with open("result0.txt", "w") as file:
-        for label in predictions_labels:
-            file.write(str(label) + "\n")
+    """
+    data = np.loadtxt(filename, dtype=int)
+    return data
 
 
 if __name__ == "__main__":
-    main()
+    # Load test dataset
+    x_test = load("testnet0.txt")
+
+    # Load pre-trained neural network
+    with open('wnet0.pkl', 'rb') as f:
+        best_network_result = pickle.load(f)
+
+    # Make predictions using the loaded network
+    predictions = best_network_result.predict(x_test)
+
+    # Save predictions to a file
+    with open("result0.txt", "w") as file:
+        for label in predictions:
+            file.write(str(label) + "\n")
