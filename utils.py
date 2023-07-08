@@ -152,3 +152,16 @@ def write_object_to_file(network, file_path):
         # Serialize and dump the network object to the file
         pickle.dump(network, file)
 
+
+def arrange_data(filename):
+    # Read data from the file
+    data = pd.read_csv(filename, delim_whitespace=True, header=None, dtype=str)
+
+    # Extract examples and labels from the data
+    examples = data.iloc[:, 0].astype(str)
+    transpose = examples.to_frame()
+    matrix = transpose.apply(row_to_list, axis='columns', result_type='expand')
+    test_set = matrix.to_numpy(int)
+
+    return test_set
+

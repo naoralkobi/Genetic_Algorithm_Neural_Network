@@ -32,6 +32,17 @@ pip install -r requirements.txt
 python3 buildnet0.py
 ```
 
+## Important:
+Default run is on: ```nn0_train.txt```, ```nn0_test.txt```
+if you want to change it go to line number 395 in ```buildnet0.py``` and change it to your test file. 
+```nn0_train.txt``` should get 16K examples.
+```nn1_train.txt``` should get 4K examples.
+please see examples in the attached files.
+```
+    ga = GeneticAlgorithm('nn0_train.txt', 'nn0_test.txt')
+```
+
+
 The script will train the neural network using the genetic algorithm and display the accuracy of the network on the test data.
 
 ## File Structure

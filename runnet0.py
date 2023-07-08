@@ -6,26 +6,11 @@ import pandas as pd
 from buildnet0 import NeuralNetwork  # Assuming `buildnet0` contains the definition of the NeuralNetwork class
 import numpy as np
 import pickle
-
-
-def load(filename):
-    """
-    Load data from a file.
-
-    Args:
-        filename (str): The name of the file to load.
-
-    Returns:
-        numpy.ndarray: The loaded data as a NumPy array.
-
-    """
-    data = np.loadtxt(filename, dtype=int)
-    return data
-
+from utils import arrange_data
 
 if __name__ == "__main__":
     # Load test dataset
-    x_test = load("testnet0.txt")
+    x_test = arrange_data("testnet0.txt")
 
     # Load pre-trained neural network
     with open('wnet0.pkl', 'rb') as f:
